@@ -11,13 +11,15 @@ const numbers = {
   keyin6: 6,
   keyin7: 7,
 };
-const filteredNumbers = {};
-for (const key in numbers) {
-  if (numbers[key] >= 3) {
-    filteredNumbers[key] = numbers[key];
-  }
-}
-console.log(filteredNumbers);
+
+console.log(Object.values(numbers).filter(item => item >= 3));
+// const filteredNumbers = {};
+// for (const key in numbers) {
+//   if (numbers[key] >= 3) {
+//     filteredNumbers[key] = numbers[key];
+//   }
+// }
+// console.log(filteredNumbers);
 
 /* 2 */
 /* Необходимо из объекта, который лежит в константе post вывести значения, к которым приписан комментарий, в консоль. */
@@ -120,6 +122,6 @@ const en = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 const ru = ["понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье"];
 const week = {};
 for (const key in en) {
-  week[en[key]]=ru[key];
+  week[en[key]] = ru[key];
 }
 console.log(week);
