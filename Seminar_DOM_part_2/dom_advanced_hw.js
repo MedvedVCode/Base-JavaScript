@@ -36,7 +36,7 @@ ariaLabelledbyEl.setAttribute('data-dd', '2');
 let ddData = ariaLabelledbyEl.dataset.dd;
 console.log(ddData);
 ddData = 3;
-ariaLabelledbyEl.dataset.dd = 3;
+ariaLabelledbyEl.dataset.dd = ddData;
 
 task(7);
 /* 7. Удалите атрибут type у элемента с классом "dropdown-toggle". */
