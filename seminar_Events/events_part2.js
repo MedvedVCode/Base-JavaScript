@@ -26,13 +26,16 @@ messageBtnEl.addEventListener('click', e => {
 - Если поле было чем-либо заполнено, подсветку (класс error) необходимо убрать. */
 const formEl = document.querySelector('.form');
 const inputEl = formEl.querySelectorAll('.form-control');
+const headerEl = document.querySelector('head');
+
+headerEl.insertAdjacentHTML('beforeend', '<style>.error{background-color: red;}</style>');
 
 formEl.addEventListener('submit', e => {
   inputEl.forEach(item => {
     if (item.value === '') {
       e.preventDefault();
       item.classList.add('error');
-      item.style.backgroundColor = 'red';
+      // item.style.backgroundColor = 'red';
     }
   })
 });
@@ -40,9 +43,9 @@ formEl.addEventListener('submit', e => {
 formEl.addEventListener('input', e => {
   if (e.target.value !== '') {
     e.target.classList.remove('error');
-    e.target.style.removeProperty('background-color');
+    // e.target.style.removeProperty('background-color');
   } else {
     e.target.classList.add('error');
-    e.target.style.backgroundColor = 'red';
+    // e.target.style.backgroundColor = 'red';
   }
 })
