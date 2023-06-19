@@ -244,7 +244,6 @@ input:focus {
 /* --------END FEATURES-------- */
 /* --------CART-------- */
 .cart {
-  display: none;
   font-style: normal;
   font-size: 22px;
   line-height: 26px;
@@ -273,7 +272,7 @@ input:focus {
   margin-bottom: 40px;
 }
 
-.card:last-child{
+.card:last-child {
   margin-bottom: 96px;
 }
 
@@ -326,6 +325,13 @@ input:focus {
   font-size: 18px;
   line-height: 22px;
   color: #656565;
+
+}
+
+.quantity-value::-webkit-inner-spin-button,
+.quantity-value::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .cross-img {

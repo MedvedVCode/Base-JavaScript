@@ -1,9 +1,10 @@
 const ulEl = document.querySelector('.products__cards');
-
 const data = JSON.parse(dataList);
+
 data.forEach(item => {
   const liEl = document.createElement('li');
   liEl.classList.add('product__card');
+  liEl.id = `product-${item.id}`;
   ulEl.append(liEl);
 
   const articleEl = document.createElement('article');
@@ -43,7 +44,7 @@ data.forEach(item => {
   const buttonEl = document.createElement('button');
   buttonEl.classList.add('product__card-btn');
   buttonEl.type = 'button';
-  
+
   const svgEl = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   const path1El = document.createElementNS('http://www.w3.org/2000/svg', 'path');
   const path2El = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -71,3 +72,148 @@ data.forEach(item => {
 
   articleEl.append(buttonEl);
 });
+
+const cardMap = new Map();
+const addButtonArray = document.querySelectorAll('.product__card-btn');
+const cartEl = document.querySelector('.cart');
+const cartContainerEl = cartEl.querySelector('.cart-wrp');
+
+const getIdFromCard = (id) => {
+  return id.slice(id.indexOf('-') + 1);
+}
+
+const searchObjectByIdInData = (id) => {
+  const res = data.filter(item => item.id === Number(id));
+  console.log(res);
+  return res;
+}
+
+const updateQuantityInCard = (id, quantity) => {
+  const updatedCardEl = document.querySelector(`#card-${id}`);
+  const quantityEl = updatedCardEl.querySelector('.quantity-value');
+  quantityEl.value = quantity;
+}
+
+const addCardToCartByObj = (item, quantity) => {
+  const cardEl = document.createElement('article');
+  cardEl.classList.add('card');
+  cardEl.id = `card-${item.id}`;
+  cartContainerEl.append(cardEl);
+
+  const cardLinkEl = document.createElement('a');
+  cardLinkEl.href = '#';
+  cardLinkEl.classList.add('card-link');
+  cardEl.append(cardLinkEl);
+
+  const cardImgEl = document.createElement('img');
+  cardImgEl.classList.add('card-img');
+  cardImgEl.src = item.url;
+  cardImgEl.alt = 'Man photo';
+  cardImgEl.height = '306';
+  cardLinkEl.append(cardImgEl);
+
+  const cardTextEl = document.createElement('div');
+  cardTextEl.classList.add('card-text');
+  cardEl.append(cardTextEl);
+
+  const cardTitleEl = document.createElement('h2');
+  cardTitleEl.classList.add('card-title');
+  cardTitleEl.textContent = item.title;
+  cardTextEl.append(cardTitleEl);
+
+  const cardPriceEl = document.createElement('p');
+  cardPriceEl.classList.add('card-price');
+  cardPriceEl.textContent = 'Price: ';
+  cardTextEl.append(cardPriceEl);
+
+  const priceValueEl = document.createElement('span');
+  priceValueEl.classList.add('price-value');
+  priceValueEl.textContent = `$${item.price}`;
+  cardPriceEl.append(priceValueEl);
+
+  const cardColorEl = document.createElement('p');
+  cardColorEl.classList.add('card-color');
+  cardColorEl.textContent = 'Color: ';
+  cardTextEl.append(cardColorEl);
+
+  const colorValueEl = document.createElement('span');
+  colorValueEl.classList.add('color-value');
+  colorValueEl.textContent = item.color;
+  cardColorEl.append(colorValueEl);
+
+  const cardSizeEl = document.createElement('p');
+  cardSizeEl.classList.add('card-size');
+  cardSizeEl.textContent = 'Size: ';
+  cardTextEl.append(cardSizeEl);
+
+  const sizeValueEl = document.createElement('span');
+  sizeValueEl.classList.add('size-value');
+  sizeValueEl.textContent = item.size;
+  cardSizeEl.append(sizeValueEl);
+
+  const cardQuantityEl = document.createElement('label');
+  cardQuantityEl.classList.add('card-quantity');
+  cardQuantityEl.textContent = 'Quantity: ';
+  cardTextEl.append(cardQuantityEl);
+
+  const quantityValueEl = document.createElement('input');
+  quantityValueEl.classList.add('quantity-value');
+  quantityValueEl.value = quantity;
+  quantityValueEl.type = 'number';
+  cardQuantityEl.append(quantityValueEl);
+
+  quantityValueEl.addEventListener('change', e => {
+    console.log(typeof quantityValueEl.value);
+    cardMap.set(`${item.id}`, Number(quantityValueEl.value));
+  });
+
+  const crossImgEl = document.createElement('img');
+  crossImgEl.classList.add('cross-img');
+  crossImgEl.src = 'img/cross.svg';
+  crossImgEl.alt = 'Cross on close photo';
+  crossImgEl.height = '18';
+  cardTextEl.append(crossImgEl);
+
+  crossImgEl.addEventListener('click', e => {
+    let element = e.target;
+    do
+      element = element.parentElement;
+    while (element.className !== 'card');
+    element.remove();
+
+    const allCardsEl = document.querySelectorAll('.card');
+    if (allCardsEl.length === 0) {
+      const cartEl = document.querySelector('.cart');
+      cartEl.setAttribute('style', 'display: none;');
+    }
+  })
+}
+
+addButtonArray.forEach(item => {
+  item.addEventListener('click', e => {
+    let element = e.target;
+    do
+      element = element.parentElement;
+    while (element.className !== 'product__card');
+
+    const cardId = getIdFromCard(element.id);
+
+    if (cartEl.getAttribute('style') !== null) {
+      cartEl.removeAttribute('style');
+    }
+
+    if (cardMap.has(cardId) && document.querySelector(`#card-${cardId}`) !== null) {
+      const newQuantity = cardMap.get(cardId) + 1;
+      cardMap.set(cardId, newQuantity);
+      updateQuantityInCard(cardId, newQuantity);
+    } else {
+      if (!cardMap.has(cardId)) {
+        cardMap.set(cardId, 1);
+      }
+      const dataObj = searchObjectByIdInData(cardId);
+      addCardToCartByObj(...dataObj, cardMap.get(cardId));
+    }
+  })
+});
+
+
