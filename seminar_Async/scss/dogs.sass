@@ -1,0 +1,46 @@
+*
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+
+.body
+  padding-top: 50px 
+  
+.btn
+  margin-left: 100px
+  padding: 15px
+  border-radius: 10px
+  max-width: 300px
+  background: none
+  border: 1px solid teal
+  color: teal
+  transition: all .5s ease-in-out
+  cursor: pointer
+  &:hover 
+    border-color: tomato
+    color: tomato
+  &:active
+    background-color: teal
+    color: white
+    border-color: white
+
+.dog
+  &-list
+    display: grid
+    margin-top: 50px
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))
+    grid-auto-flow: dense
+    gap: 10px
+  &-wrp
+    background-color: teal
+    display: flex
+    align-items: center
+    justify-content: center
+
+  &-image
+    height: 100%
+    width: 100%
+    object-fit: contain
+
+
+

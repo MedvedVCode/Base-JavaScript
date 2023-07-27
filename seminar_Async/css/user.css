@@ -1,0 +1,43 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.list {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+  align-items: center;
+}
+
+.card {
+  padding: 20px;
+  border: 2px solid teal;
+  border-radius: 10px;
+  min-height: 260px;
+}
+.card-title {
+  font-size: 20px;
+  line-height: 24px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid tomato;
+}
+.card-text {
+  margin-top: 5px;
+}
+.card-btn {
+  background: none;
+  border: none;
+  margin-top: 20px;
+  cursor: pointer;
+}
+.card-btn:hover svg {
+  fill: tomato;
+}
+.card-trash {
+  width: 20px;
+  height: 20px;
+  fill: teal;
+}/*# sourceMappingURL=user.css.map */
